@@ -12,4 +12,6 @@ Multi-Sucursal.
 - [Laravel](https://laravel.com/)
 - [vue](https://vuejs.org/)
 - [tailwindcss](https://tailwindcss.com/)
+
+- [Jetstream/4](https://jetstream.laravel.com/introduction.html)
  
