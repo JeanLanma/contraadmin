@@ -1,264 +1,289 @@
-<!-- component -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-<div class="flex flex-col h-screen bg-gray-100">
+<script setup>
+import { ref } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import ApplicationMark from '@/Components/ApplicationMark.vue';
+import Banner from '@/Components/Banner.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
-    <!-- Barra de navegación superior -->
-    <div class="bg-white text-white shadow w-full p-2 flex items-center justify-between">
-        <div class="flex items-center">
-            <div class="flex items-center"> <!-- Mostrado en todos los dispositivos -->
-                <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-28 h-18 mr-2">
-                <h2 class="font-bold text-xl">Nombre de la Aplicación</h2>
-            </div>
-            <div class="md:hidden flex items-center"> <!-- Se muestra solo en dispositivos pequeños -->
-                <button id="menuBtn">
-                    <i class="fas fa-bars text-gray-500 text-lg"></i> <!-- Ícono de menú -->
-                </button>
-            </div>
-        </div>
+defineProps({
+    title: String,
+});
 
-        <!-- Ícono de Notificación y Perfil -->
-        <div class="space-x-5">
-            <button>
-                <i class="fas fa-bell text-gray-500 text-lg"></i>
-            </button>
-            <!-- Botón de Perfil -->
-            <button>
-                <i class="fas fa-user text-gray-500 text-lg"></i>
-            </button>
-        </div>
-    </div>
+const showingNavigationDropdown = ref(false);
 
-    <!-- Contenido principal -->
-    <div class="flex-1 flex flex-wrap">
-        <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
-        <div class="p-2 bg-white w-full md:w-60 flex flex-col md:flex hidden" id="sideNav">
-            <nav>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-home mr-2"></i>Inicio
-                </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-file-alt mr-2"></i>Autorizaciones
-                </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-users mr-2"></i>Usuarios
-                </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-store mr-2"></i>Comercios
-                </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-exchange-alt mr-2"></i>Transacciones
-                </a>
-            </nav>
+const switchToTeam = (team) => {
+    router.put(route('current-team.update'), {
+        team_id: team.id,
+    }, {
+        preserveState: false,
+    });
+};
 
-            <!-- Ítem de Cerrar Sesión -->
-            <a class="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto" href="#">
-                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
-            </a>
+const logout = () => {
+    router.post(route('logout'));
+};
+</script>
 
-            <!-- Señalador de ubicación -->
-            <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
+<template>
+    <div>
+        <Head :title="title" />
 
-            <!-- Copyright al final de la navegación lateral -->
-            <p class="mb-1 px-5 py-3 text-left text-xs text-cyan-500">Copyright WCSLAT@2023</p>
+        <Banner />
 
-        </div>
+        <div class="min-h-screen bg-gray-100">
+            <nav class="bg-white border-b border-gray-100">
+                <!-- Primary Navigation Menu -->
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex">
+                            <!-- Logo -->
+                            <div class="shrink-0 flex items-center">
+                                <Link :href="route('dashboard')">
+                                    <ApplicationMark class="block h-9 w-auto" />
+                                </Link>
+                            </div>
 
-        <!-- Área de contenido principal -->
-        <div class="flex-1 p-4 w-full md:w-1/2">
-            <!-- Campo de búsqueda -->
-            <div class="relative max-w-md w-full">
-                <div class="absolute top-1 left-2 inline-flex items-center p-2">
-                    <i class="fas fa-search text-gray-400"></i>
-                </div>
-                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Buscar...">
-            </div>
+                            <!-- Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Dashboard
+                                </NavLink>
+                            </div>
+                        </div>
 
-                 <!-- Contenedor de Gráficas -->
-            <div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
-                <!-- Primer contenedor -->
-                <!-- Sección 1 - Gráfica de Usuarios -->
-                <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
-                    <h2 class="text-gray-500 text-lg font-semibold pb-1">Usuarios</h2>
-                    <div class="my-1"></div> <!-- Espacio de separación -->
-                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                    <div class="chart-container" style="position: relative; height:150px; width:100%">
-                        <!-- El canvas para la gráfica -->
-                        <canvas id="usersChart"></canvas>
-                    </div>
-                </div>
+                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <div class="ms-3 relative">
+                                <!-- Teams Dropdown -->
+                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                    <template #trigger>
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                {{ '$page.props.auth.user.current_team.name' }}
 
-                <!-- Segundo contenedor -->
-                <!-- Sección 2 - Gráfica de Comercios -->
-                <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
-                    <h2 class="text-gray-500 text-lg font-semibold pb-1">Comercios</h2>
-                    <div class="my-1"></div> <!-- Espacio de separación -->
-                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                    <div class="chart-container" style="position: relative; height:150px; width:100%">
-                        <!-- El canvas para la gráfica -->
-                        <canvas id="commercesChart"></canvas>
-                    </div>
-                </div>
-            </div>
+                                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </template>
 
-            <!-- Tercer contenedor debajo de los dos anteriores -->
-            <!-- Sección 3 - Tabla de Autorizaciones Pendientes -->
-            <div class="mt-8 bg-white p-4 shadow rounded-lg">
-                <h2 class="text-gray-500 text-lg font-semibold pb-4">Autorizaciones Pendientes</h2>
-                <div class="my-1"></div> <!-- Espacio de separación -->
-                <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                <table class="w-full table-auto text-sm">
-                    <thead>
-                        <tr class="text-sm leading-normal">
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Foto</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Nombre</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Rol</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10"></td>
-                            <td class="py-2 px-4 border-b border-grey-light">Juan Pérez</td>
-                            <td class="py-2 px-4 border-b border-grey-light">Comercio</td>
-                        </tr>
-                        <!-- Añade más filas aquí como la anterior para cada autorización pendiente -->
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10"></td>
-                            <td class="py-2 px-4 border-b border-grey-light">María Gómez</td>
-                            <td class="py-2 px-4 border-b border-grey-light">Usuario</td>
-                        </tr>
-                        </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10"></td>
-                            <td class="py-2 px-4 border-b border-grey-light">Carlos López</td>
-                            <td class="py-2 px-4 border-b border-grey-light">Usuario</td>
-                        </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10"></td>
-                            <td class="py-2 px-4 border-b border-grey-light">Laura Torres</td>
-                            <td class="py-2 px-4 border-b border-grey-light">Comercio</td>
-                        </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" class="rounded-full h-10 w-10"></td>
-                            <td class="py-2 px-4 border-b border-grey-light">Ana Ramírez</td>
-                            <td class="py-2 px-4 border-b border-grey-light">Usuario</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Botón "Ver más" para la tabla de Autorizaciones Pendientes -->
-                <div class="text-right mt-4">
-                    <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
-                        Ver más
-                    </button>
-                </div>
-            </div>
+                                    <template #content>
+                                        <div class="w-60">
+                                            <!-- Team Management -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Manage Team
+                                            </div>
 
-            <!-- Cuarto contenedor -->
-            <!-- Sección 4 - Tabla de Transacciones -->
-            <div class="mt-8 bg-white p-4 shadow rounded-lg">
-                <div class="bg-white p-4 rounded-md mt-4">
-                    <h2 class="text-gray-500 text-lg font-semibold pb-4">Transacciones</h2>
-                    <div class="my-1"></div> <!-- Espacio de separación -->
-                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                    <table class="w-full table-auto text-sm">
-                        <thead>
-                            <tr class="text-sm leading-normal">
-                                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Nombre</th>
-                                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Fecha</th>
-                                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Monto</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="hover:bg-grey-lighter">
-                                <td class="py-2 px-4 border-b border-grey-light">Carlos Sánchez</td>
-                                <td class="py-2 px-4 border-b border-grey-light">27/07/2023</td>
-                                <td class="py-2 px-4 border-b border-grey-light text-right">$1500</td>
-                            </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light">Pedro Hernández</td>
-                            <td class="py-2 px-4 border-b border-grey-light">02/08/2023</td>
-                            <td class="py-2 px-4 border-b border-grey-light text-right">$1950</td>
-                        </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light">Sara Ramírez</td>
-                            <td class="py-2 px-4 border-b border-grey-light">03/08/2023</td>
-                            <td class="py-2 px-4 border-b border-grey-light text-right">$1850</td>
-                        </tr>
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-2 px-4 border-b border-grey-light">Daniel Torres</td>
-                            <td class="py-2 px-4 border-b border-grey-light">04/08/2023</td>
-                            <td class="py-2 px-4 border-b border-grey-light text-right">$2300</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- Botón "Ver más" para la tabla de Transacciones -->
-                    <div class="text-right mt-4">
-                        <button class
-                                                <div class="text-right mt-4">
-                            <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
-                                Ver más
+                                            <!-- Team Settings -->
+                                            <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                                                Team Settings
+                                            </DropdownLink>
+
+                                            <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
+                                                Create New Team
+                                            </DropdownLink>
+
+                                            <!-- Team Switcher -->
+                                            <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                                <div class="border-t border-gray-200" />
+
+                                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                                    Switch Teams
+                                                </div>
+
+                                                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                                    <form @submit.prevent="switchToTeam(team)">
+                                                        <DropdownLink as="button">
+                                                            <div class="flex items-center">
+                                                                <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                </svg>
+
+                                                                <div>{{ team.name }}</div>
+                                                            </div>
+                                                        </DropdownLink>
+                                                    </form>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </Dropdown>
+                            </div>
+
+                            <!-- Settings Dropdown -->
+                            <div class="ms-3 relative">
+                                <Dropdown align="right" width="48">
+                                    <template #trigger>
+                                        <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                        </button>
+
+                                        <span v-else class="inline-flex rounded-md">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                {{ $page.props.auth.user.name }}
+
+                                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <template #content>
+                                        <!-- Account Management -->
+                                        <div class="block px-4 py-2 text-xs text-gray-400">
+                                            Manage Account
+                                        </div>
+
+                                        <DropdownLink :href="route('profile.show')">
+                                            Profile
+                                        </DropdownLink>
+
+                                        <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                                            API Tokens
+                                        </DropdownLink>
+
+                                        <div class="border-t border-gray-200" />
+
+                                        <!-- Authentication -->
+                                        <form @submit.prevent="logout">
+                                            <DropdownLink as="button">
+                                                Log Out
+                                            </DropdownLink>
+                                        </form>
+                                    </template>
+                                </Dropdown>
+                            </div>
+                        </div>
+
+                        <!-- Hamburger -->
+                        <div class="-me-2 flex items-center sm:hidden">
+                            <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
+                                <svg
+                                    class="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        :class="{'hidden': showingNavigationDropdown, 'inline-flex': ! showingNavigationDropdown }"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                    <path
+                                        :class="{'hidden': ! showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Responsive Navigation Menu -->
+                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <!-- Responsive Settings Options -->
+                    <div class="pt-4 pb-1 border-t border-gray-200">
+                        <div class="flex items-center px-4">
+                            <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
+                                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                            </div>
+
+                            <div>
+                                <div class="font-medium text-base text-gray-800">
+                                    {{ $page.props.auth.user.name }}
+                                </div>
+                                <div class="font-medium text-sm text-gray-500">
+                                    {{ $page.props.auth.user.email }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 space-y-1">
+                            <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
+                                Profile
+                            </ResponsiveNavLink>
+
+                            <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
+                                API Tokens
+                            </ResponsiveNavLink>
+
+                            <!-- Authentication -->
+                            <form method="POST" @submit.prevent="logout">
+                                <ResponsiveNavLink as="button">
+                                    Log Out
+                                </ResponsiveNavLink>
+                            </form>
+
+                            <!-- Team Management -->
+                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                                <div class="border-t border-gray-200" />
+
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    Manage Team
+                                </div>
+
+                                <!-- Team Settings -->
+                                <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)" :active="route().current('teams.show')">
+                                    Team Settings
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">
+                                    Create New Team
+                                </ResponsiveNavLink>
+
+                                <!-- Team Switcher -->
+                                <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                    <div class="border-t border-gray-200" />
+
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        Switch Teams
+                                    </div>
+
+                                    <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                        <form @submit.prevent="switchToTeam(team)">
+                                            <ResponsiveNavLink as="button">
+                                                <div class="flex items-center">
+                                                    <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <div>{{ team.name }}</div>
+                                                </div>
+                                            </ResponsiveNavLink>
+                                        </form>
+                                    </template>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Heading -->
+            <header v-if="$slots.header" class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <slot name="header" />
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main>
+                <slot />
+            </main>
         </div>
     </div>
-</div>
-
-<!-- Script para las gráficas -->
-<script>
-    // Gráfica de Usuarios
-    var usersChart = new Chart(document.getElementById('usersChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Nuevos', 'Registrados'],
-            datasets: [{
-                data: [30, 65],
-                backgroundColor: ['#00F0FF', '#8B8B8D'],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'bottom' // Ubicar la leyenda debajo del círculo
-            }
-        }
-    });
-
-    // Gráfica de Comercios
-    var commercesChart = new Chart(document.getElementById('commercesChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Nuevos', 'Registrados'],
-            datasets: [{
-                data: [60, 40],
-                backgroundColor: ['#FEC500', '#8B8B8D'],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'bottom' // Ubicar la leyenda debajo del círculo
-            }
-        }
-    });
-
-    // Agregar lógica para mostrar/ocultar la navegación lateral al hacer clic en el ícono de menú
-    const menuBtn = document.getElementById('menuBtn');
-    const sideNav = document.getElementById('sideNav');
-
-    menuBtn.addEventListener('click', () => {
-        sideNav.classList.toggle('hidden'); // Agrega o quita la clase 'hidden' para mostrar u ocultar la navegación lateral
-    });
-</script>
-</body>
-</html>
+</template>
