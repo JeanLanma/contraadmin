@@ -1,7 +1,14 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const isAccoridionOpen = ref(false);
+const props = defineProps({
+    isOpen: {
+        type: Boolean,
+        default: false,
+    },
+})
+
+const isAccoridionOpen = ref(props.isOpen);
 const accordionHeight = ref('0px');
 const toggleAccordion = () => {
     isAccoridionOpen.value = !isAccoridionOpen.value;

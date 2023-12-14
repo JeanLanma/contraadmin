@@ -29,12 +29,6 @@ const logout = () => {
     router.post(route('logout'));
 };
 
-// const isAccoridionOpen = ref(false);
-// const accordionHeight = ref('0px');
-// const toggleAccordion = () => {
-//     isAccoridionOpen.value = !isAccoridionOpen.value;
-//     accordionHeight.value = isAccoridionOpen.value ? 'auto' : '0px';
-// };
 </script>
 
 <template>
@@ -60,7 +54,7 @@ const logout = () => {
                 <aside class="bg-white w-60 min-h-screen">
                     <nav class="py-4">
                         <div>
-                            <NavLinkAside>
+                            <NavLinkAside :isOpen="route().current('dashboard')">
                                 <template #NavLink>
                                     <a href="#">
                                         <span class="flex"> 
@@ -73,8 +67,8 @@ const logout = () => {
                         </div>
 
                         <div>
-                            <NavLinkAside>
-                                <template #NavLink>
+                            <NavLinkAside :isOpen="route().current('prodcuts')">
+                                <template :isOpen="route().current('dashboard')" #NavLink>
                                     <a href="#">
                                         <span class="flex"> 
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
