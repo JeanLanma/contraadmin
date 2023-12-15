@@ -10,6 +10,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import AdminLogo from '@/Components/AdminLogo.vue';
 import Chevron from '@/Components/Chevron.vue';
 import NavLinkAside from '@/Shared/Aside/NavLink.vue';
+import Profile from '@/Components/Icons/profile.vue';
+import { FormatUserName } from '@/Shared/Utils.js';
 
 defineProps({
     title: String,
@@ -33,7 +35,9 @@ const logout = () => {
 
 <template>
     <div>
-        <Head :title="title" />
+        <Head :title="title">
+            <link rel="icon" type="image/ico" href="/favicon.ico" />
+        </Head>
 
         <Banner />
 
@@ -43,9 +47,16 @@ const logout = () => {
             <header class="w-full bg-white h-16 shadow-md border-b-2 border-b-cyan-300">
                 <div class="w-full flex justify-center px-4 py-2">
                     <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
+                        <Profile class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200" />
+                        <h2 class="text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">{{ FormatUserName($page.props.auth.user.name) }}</h2>
+                    </div>
+                    <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
                         <AdminLogo class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
                         <h2 class="text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">Contra Admin</h2>
                         <Chevron class="block opacity-50 h-6 w-auto group-hover:opacity-75 transition-opacity duration-200" />
+                    </div>
+                    <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
+                        <ApplicationMark class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
                     </div>
                 </div>
             </header>
