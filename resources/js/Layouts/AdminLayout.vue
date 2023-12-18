@@ -45,18 +45,18 @@ const logout = () => {
             <!-- Page Content -->
             <!-- Header / Top Menu -->
             <header class="w-full bg-white h-16 shadow-md border-b-2 border-b-cyan-300">
-                <div class="w-full flex justify-center px-4 py-2">
-                    <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
-                        <Profile class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200" />
-                        <h2 class="text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">{{ FormatUserName($page.props.auth.user.name) }}</h2>
-                    </div>
+                <div class="w-full flex justify-between px-4 py-2">
                     <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
                         <AdminLogo class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
                         <h2 class="text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">Contra Admin</h2>
                         <Chevron class="block opacity-50 h-6 w-auto group-hover:opacity-75 transition-opacity duration-200" />
                     </div>
                     <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
-                        <ApplicationMark class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
+                        <img class="h-8" src="/assets/contradminlogo.png" alt="Admin Logo">
+                    </div>
+                    <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
+                        <Profile class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200" />
+                        <h2 class="text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">{{ FormatUserName($page.props.auth.user.name) }}</h2>
                     </div>
                 </div>
             </header>
@@ -79,7 +79,7 @@ const logout = () => {
 
                         <div>
                             <NavLinkAside :isOpen="route().current('prodcuts')">
-                                <template :isOpen="route().current('dashboard')" #NavLink>
+                                <template #NavLink>
                                     <a href="#">
                                         <span class="flex"> 
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -87,22 +87,22 @@ const logout = () => {
                                                 <path d="M9 6V5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5V6" stroke="black" stroke-linecap="round"/>
                                                 <path d="M9.1709 15C9.58273 16.1652 10.694 17 12.0002 17C13.3064 17 14.4177 16.1652 14.8295 15" stroke="black" stroke-linecap="round"/>
                                             </svg>
-                                            <span class="ml-4 font-bold">Usuarios</span>
+                                            <span class="ml-4 font-bold">Catologo</span>
                                         </span>
                                     </a>
                                 </template>
                                 <template #NavLinkItems>
-                                    <a href="#" class="block rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Productos</span>
                                         </div>
                                     </a>
-                                    <a href="#" class="block rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Categorias</span>
                                         </div>
                                     </a>
-                                    <a href="#" class="block rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Etiquetas</span>
                                         </div>
