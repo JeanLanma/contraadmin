@@ -19,3 +19,6 @@ El desarrollo debe ser ágil, es importante que el proyecto se pueda adaptar a l
 
 ## Multi-Sucursal y Multi-Almacén.
 Es importante que el sistema pueda manejar múltiples sucursales y almacenes, esto nos permitirá tener un control más preciso de los productos, además de que nos permitirá tener un control más preciso de los pedidos y de los clientes.
+
+## 19/12/2023
+Se inicia la creacion de una primera version de los modelos

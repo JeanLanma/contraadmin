@@ -30,7 +30,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        // return view('Layouts.DashboardLayout');
         return Inertia::render('Dashboard/DashboardIndex');
     })->name('dashboard');
 });
