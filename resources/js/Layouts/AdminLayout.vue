@@ -60,7 +60,8 @@ const logout = () => {
                     </div>
                 </div>
             </header>
-            <div>
+
+            <div class="flex">
                 
                 <aside class="bg-white w-60 min-h-screen">
                     <nav class="py-4">
@@ -115,7 +116,7 @@ const logout = () => {
                 </aside>
                 
                 <div>
-                    
+                    <slot name="content" />
                 </div>
             
             </div>
