@@ -35,7 +35,7 @@ defineProps({
                 <div class="text-center">
                     <h2 class="text-white font-bold text-4xl">Bienvenido</h2>
                 </div>
-                <div class="w-96 h-1 bg-white"></div>
+                <div class="w-80 md:w-96 h-1 bg-white"></div>
                 <div class="text-center">
                     <h2 class="text-white font-bold text-4xl">Contra Admin Panel</h2>
                 </div>
@@ -43,8 +43,8 @@ defineProps({
             </div>
 
             <div class="flex justify-center mt-12">
-                <a href="#">
-                    <button class="text-white font-bold text-4xl bg-cyan-400 px-6 py-3 hover:bg-cyan-500 transition-all duration-300 rounded">Inicar sessión</button>
+                <a :href="route('dashboard')">
+                    <button class="text-white font-bold text-2xl bg-cyan-400 px-6 py-3 hover:bg-cyan-500 transition-all duration-300 rounded-full">Inicar sessión</button>
                 </a>
             </div>
         </div>
