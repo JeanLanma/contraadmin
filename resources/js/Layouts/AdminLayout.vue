@@ -89,7 +89,7 @@ const openAside = () => {
                         </div>
 
                         <div>
-                            <NavLinkAside :isOpen="route().current('prodcuts')">
+                            <NavLinkAside :isOpen="route().current('products')">
                                 <template #NavLink>
                                     <a href="#">
                                         <span class="flex"> 
@@ -116,6 +116,116 @@ const openAside = () => {
                                     <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Etiquetas</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex"> 
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="6" r="4" stroke="#6B7280" stroke-width="1.5"></circle> <path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Usuarios</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Usuarios</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Roles y Permisos</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex"> 
+                                            <AdminLogo class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
+                                            <span class="ml-4 font-bold">Sucursales</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Tiendas</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Almacenes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Inventario</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+                        
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex">
+                                            <svg class="stroke-gray-500" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="5" y="4" width="14" height="17" rx="2" stroke="#6B7280" stroke-width="2"></rect> <path d="M9 9H15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> <path d="M9 13H15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> <path d="M9 17H13" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Pedidos</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Ordenes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Envios</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Facturación</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+                        
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex">
+                                            <svg fill="#6B7280" width="25px" height="25px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#6B7280" stroke-width="3.84"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.512"></g><g id="SVGRepo_iconCarrier"> <path d="M111.13672,158.97681a56.00028,56.00028,0,1,0-46.27246-.00025,92.23328,92.23328,0,0,0-52.13867,36.11719,3.99985,3.99985,0,1,0,6.541,4.60547A84.01746,84.01746,0,0,1,156.73,199.69434a4.00014,4.00014,0,0,0,6.541-4.60645A92.23237,92.23237,0,0,0,111.13672,158.97681ZM40.00049,108a48,48,0,1,1,48,48A48.05436,48.05436,0,0,1,40.00049,108Zm203.82519,92.66162a3.99923,3.99923,0,0,1-5.57373-.96728A84.17363,84.17363,0,0,0,169.522,164a4,4,0,0,1,0-8,48,48,0,1,0-13.02636-94.2124,4,4,0,1,1-2.166-7.70117A55.99661,55.99661,0,0,1,192.6582,158.97681,92.23507,92.23507,0,0,1,244.793,195.08789,4.0002,4.0002,0,0,1,243.82568,200.66162Z"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Clientes</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Clientes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Facturación</span>
                                         </div>
                                     </a>
                                 </template>
@@ -141,7 +251,7 @@ const openAside = () => {
                         </div>
 
                         <div>
-                            <NavLinkAside :isOpen="route().current('prodcuts')">
+                            <NavLinkAside :isOpen="route().current('products')">
                                 <template #NavLink>
                                     <a href="#">
                                         <span class="flex"> 
@@ -168,6 +278,116 @@ const openAside = () => {
                                     <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Etiquetas</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex"> 
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="6" r="4" stroke="#6B7280" stroke-width="1.5"></circle> <path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Usuarios</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Usuarios</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Roles y Permisos</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex"> 
+                                            <AdminLogo class="block opacity-50 h-8 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
+                                            <span class="ml-4 font-bold">Sucursales</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Tiendas</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Almacenes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Inventario</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex">
+                                            <svg class="stroke-gray-500" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="5" y="4" width="14" height="17" rx="2" stroke="#6B7280" stroke-width="2"></rect> <path d="M9 9H15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> <path d="M9 13H15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> <path d="M9 17H13" stroke="#6B7280" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Pedidos</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Ordenes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Envios</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Facturación</span>
+                                        </div>
+                                    </a>
+                                </template>
+                            </NavLinkAside>
+                        </div>
+                        
+                        <div>
+                            <NavLinkAside :isOpen="route().current('products')">
+                                <template #NavLink>
+                                    <a href="#">
+                                        <span class="flex">
+                                            <svg fill="#6B7280" width="25px" height="25px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#6B7280" stroke-width="3.84"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.512"></g><g id="SVGRepo_iconCarrier"> <path d="M111.13672,158.97681a56.00028,56.00028,0,1,0-46.27246-.00025,92.23328,92.23328,0,0,0-52.13867,36.11719,3.99985,3.99985,0,1,0,6.541,4.60547A84.01746,84.01746,0,0,1,156.73,199.69434a4.00014,4.00014,0,0,0,6.541-4.60645A92.23237,92.23237,0,0,0,111.13672,158.97681ZM40.00049,108a48,48,0,1,1,48,48A48.05436,48.05436,0,0,1,40.00049,108Zm203.82519,92.66162a3.99923,3.99923,0,0,1-5.57373-.96728A84.17363,84.17363,0,0,0,169.522,164a4,4,0,0,1,0-8,48,48,0,1,0-13.02636-94.2124,4,4,0,1,1-2.166-7.70117A55.99661,55.99661,0,0,1,192.6582,158.97681,92.23507,92.23507,0,0,1,244.793,195.08789,4.0002,4.0002,0,0,1,243.82568,200.66162Z"></path> </g></svg>
+                                            <span class="ml-4 font-bold">Clientes</span>
+                                        </span>
+                                    </a>
+                                </template>
+                                <template #NavLinkItems>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Clientes</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                        <div>
+                                            <span>Facturación</span>
                                         </div>
                                     </a>
                                 </template>
