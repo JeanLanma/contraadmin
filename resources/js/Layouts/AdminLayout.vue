@@ -64,9 +64,30 @@ const openAside = () => {
                     <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
                         <img class="h-8" src="/assets/contradminlogo.png" alt="Admin Logo">
                     </div>
-                    <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
+                    <!-- <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
                         <Profile class="block opacity-50 h-10 md:h-8 w-auto group-hover:opacity-75 transition-opacity duration-200" />
                         <h2 class="hidden md:block text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">{{ FormatUserName($page.props.auth.user.name) }}</h2>
+                    </div> -->
+                    <div>
+                        <Dropdown align="right" width="48">
+
+                            <template #trigger>
+                                <div class="w-fit py-2 px-4 flex items-center cursor-pointer group hover:bg-gray-100 rounded-md transition-all duration-200">
+                                    <Profile class="block opacity-50 h-10 md:h-8 w-auto group-hover:opacity-75 transition-opacity duration-200" />
+                                    <h2 class="hidden md:block text-sm opacity-50 font-bold mx-2 group-hover:opacity-75 transition-opacity duration-200">{{ FormatUserName($page.props.auth.user.name) }}</h2>
+                                </div>
+                            </template>
+                            
+                            <template #content>
+
+                                <!-- Authentication -->
+                                <form @submit.prevent="logout">
+                                    <DropdownLink as="button">
+                                        Cerrar sesión
+                                    </DropdownLink>
+                                </form>
+                            </template>
+                        </Dropdown>
                     </div>
                 </div>
             </header>

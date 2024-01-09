@@ -7,9 +7,6 @@ import AdminLogo from '@/Components/AdminLogo.vue';
 <template>
     <div>
         <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
-            <!-- <ApplicationLogo class="block h-12 w-auto" /> -->
-            <AdminLogo class="block opacity-50 h-12 w-auto group-hover:opacity-75 transition-opacity duration-200 shadow-md" />
-
 
             <h1 class="mt-8 text-2xl font-medium text-gray-900">
                 Contra Admin - Panel de adminsitración multi-tienda

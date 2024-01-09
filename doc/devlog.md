@@ -22,3 +22,6 @@ Es importante que el sistema pueda manejar múltiples sucursales y almacenes, es
 
 ## 19/12/2023
 Se inicia la creacion de una primera version de los modelos
+
+## 09/01/2024
+- Agregar logout[x]
