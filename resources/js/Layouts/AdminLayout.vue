@@ -256,7 +256,13 @@ const openAside = () => {
                     </nav>
                 </aside>
                 <!-- Aside Mobile -->
-                <aside @click="detectCLickOutside($event)" class="hidden bg-black/40 backdrop-blur fixed w-full min-h-screen navigation-dropdown">
+                <aside 
+                    @click="detectCLickOutside($event)" 
+                    class="hidden bg-black/40 backdrop-blur fixed w-full min-h-screen navigation-dropdown"
+                    @wheel.prevent
+                    @touchmove.prevent
+                    @scroll.prevent
+                >
                     <nav class="absolute z-40 py-4 bg-white w-60 min-h-screen">
                         <div>
                             <NavLinkAside :isOpen="route().current('dashboard')">

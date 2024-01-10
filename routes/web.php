@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,4 +33,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/DashboardIndex');
     })->name('dashboard');
+
+    Route::get('/admin/warehouse', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
+
 });
