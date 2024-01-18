@@ -34,7 +34,6 @@ const logout = () => {
 
 const detectCLickOutside = (event) => {
     if (event.target.classList.contains('navigation-dropdown')) {
-        // console.log(event.target);
         event.target.classList.add('hidden');
     }
 };
