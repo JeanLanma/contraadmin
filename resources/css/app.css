@@ -14,6 +14,21 @@
     }
 }
 
+@layer components {
+
+  .NavButton__common {
+    @apply w-full pl-4 pr-4 py-2 rounded-xl text-left hover:bg-white/30;
+  }
+  .NavButton__active {
+    @apply w-full pl-4 pr-4 py-2 rounded-xl text-left hover:bg-white/30 border-2 font-bold border-sky-500 text-sky-500;
+  }
+
+  .NavButton {
+    @apply w-full pl-4 pr-4 py-2 rounded-xl text-left hover:bg-white/30 border border-gray-300 text-gray-700 hover:border-sky-400 hover:shadow transition-all duration-300;
+  }
+
+}
+
 @layer utilities {
     .slide-in-top {
         -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;

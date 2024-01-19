@@ -1,6 +1,7 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import WarehouseList from './Partials/WarehouseList.vue';
+import NavButton from '@/Shared/Components/NavButton.vue';
 </script>
 
 <template>
@@ -16,13 +17,10 @@ import WarehouseList from './Partials/WarehouseList.vue';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 
                 <div class="w-full">
-                    <div class="flex gap-4">
-                        <button class="pl-2 pr-4 py-2 rounded-xl border-2 border-sky-500 text-sky-500 font-bold text-left hover:bg-white/30">
-                            Añadir nuevo almacen
-                        </button>
-                        <button class="pl-2 pr-4 py-2 rounded-xl border border-gray-300 text-gray-700 text-left hover:bg-white/30 hover:border-sky-400 hover:shadow transition-all duration-300">
-                            Añadir nuevo almacen
-                        </button>
+                    <div class="px-4 md:px-0 flex flex-col md:flex-row gap-4">
+                            <NavButton title="Almacen" route="warehouse.index" :active="true" />
+                            <NavButton title="Mostrar" route="warehouse.index"/>
+                            <NavButton title="Borrar" route="warehouse.index"/>
                     </div>
                 </div>
                 

@@ -93,7 +93,7 @@ const openAside = () => {
 
             <div class="flex">
                 
-                <aside class="bg-white w-0 md:w-60 min-h-screen">
+                <aside class="bg-white hidden md:block md:w-60 min-h-screen">
                     <nav class="py-4">
                         <div>
                             <NavLinkAside :isOpen="route().current('dashboard')">
@@ -423,7 +423,7 @@ const openAside = () => {
                     </nav>
                 </aside>
                 
-                <div>
+                <div class="grow">
                     <slot name="content" />
                 </div>
             
