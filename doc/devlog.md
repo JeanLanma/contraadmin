@@ -32,4 +32,5 @@ Se inicia la creacion de una primera version de los modelos
     el diseño del sistema es la parte central no importa
     si es solo un almacen o varios.
     Los almacenes seran asignados a las tiendas
-    
+
+## 09/01/2024

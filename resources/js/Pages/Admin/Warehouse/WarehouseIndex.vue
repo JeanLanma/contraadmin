@@ -18,12 +18,76 @@ import NavButton from '@/Shared/Components/NavButton.vue';
                 
                 <div class="w-full">
                     <div class="px-4 md:px-0 flex flex-col md:flex-row gap-4">
-                            <NavButton title="Almacen" route="warehouse.index" :active="true" />
-                            <NavButton title="Mostrar" route="warehouse.index"/>
-                            <NavButton title="Borrar" route="warehouse.index"/>
+                            <NavButton 
+                                title="Añadir almacen"
+                                route="warehouse.index"
+                                :active="true"/>
+                            <NavButton 
+                                title="Mostrar" route="warehouse.index"/>
+                            <NavButton 
+                                title="Borrar"
+                                route="warehouse.index"/>
                     </div>
                 </div>
                 
+                <!-- Create form -->
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                    <div class="px-4 md:py-4 py-2">
+
+                        <div class="my-4">
+                            <h2 class="text-xl font-bold text-gray-700 md:text-center">Nuevo almacen</h2>
+                        </div>
+
+                        <form action="#" class="md:flex md:flex-col md:items-center">
+
+                            <div class="w-full sm:w-1/2">
+                                <div class="mb-5 md:flex md:items-end">
+                                    <label
+                                        for="name"
+                                        class="mb-3 block text-base font-medium text-[#07074D] md:mr-4"
+                                    >
+                                        Nombre
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        placeholder="Nombre del almacen"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="w-full sm:w-1/2">
+                                <div class="mb-5 md:flex md:items-end">
+                                    <label
+                                        for="location"
+                                        class="mb-3 block text-base font-medium text-[#07074D] md:mr-4"
+                                    >
+                                        Dirección
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        id="location"
+                                        placeholder="Calle 123, Ciudad, Estado..."
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="md:w-1/3">
+                                <button
+                                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none w-full"
+                                >
+                                    Agregar
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <WarehouseList />
                 </div>
