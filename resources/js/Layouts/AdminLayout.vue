@@ -183,7 +183,7 @@ const openAside = () => {
                                             <span>Tiendas</span>
                                         </div>
                                     </a>
-                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a :href="route('admin.warehouse.index')" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Almacenes</span>
                                         </div>
@@ -351,7 +351,7 @@ const openAside = () => {
                                             <span>Tiendas</span>
                                         </div>
                                     </a>
-                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a :href="route('admin.warehouse.index')" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Almacenes</span>
                                         </div>

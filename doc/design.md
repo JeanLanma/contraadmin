@@ -8,4 +8,8 @@ popular, como stripe o facebook
 Se usaran alertas tipo toast para mostrar mensajes de error, exito o advertencia,
 sobre todo en el manejo de los mensajes de error en formularios o de exito
 
-## Pagina de almacen
+Se utilizo la libreria de [Vue Toastification](https://github.com/Maronato/vue-toastification) para mostrar los mensajes.
+
+
+### Referencias y librerias usadas
+-[Vue Toastification](https://github.com/Maronato/vue-toastification)

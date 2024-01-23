@@ -17,7 +17,7 @@ class WarehouseController extends Controller
 
     public function store(StoreWarehouseRequest $request)
     {
-        return response()->json([
+        return redirect()->back()->with([
             'status' => 'success',
             'message' => 'Warehouse created successfully',
             'data' => [

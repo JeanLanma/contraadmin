@@ -3,6 +3,9 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
 import { useForm } from '@inertiajs/vue3'
+import { useToast, POSITION } from "vue-toastification";
+
+const toast = useToast();
 
 const CreateWarehouseForm = useForm({
             name: '',
@@ -11,7 +14,20 @@ const CreateWarehouseForm = useForm({
 })
 
 const submit = () => {
-    CreateWarehouseForm.post(route('admin.warehouse.store'))
+    CreateWarehouseForm.post(route('admin.warehouse.store'),{
+        onSuccess: (response) => {
+            console.log({response});
+            toast.success('Almacen creado con exito!',{
+                position: POSITION.TOP_CENTER
+            })
+        },
+        onError: () => {
+            toast.error('Algo salio mal, intentalo de nuevo')
+        },
+        onFinish: () => {
+            CreateWarehouseForm.reset()
+        }
+    })
 }
 </script>
 

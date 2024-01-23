@@ -19,6 +19,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "@egjs/vue3-flicking": "^4.11.2"
+        "@egjs/vue3-flicking": "^4.11.2",
+        "vue-toastification": "^2.0.0-rc.5"
     }
 }
