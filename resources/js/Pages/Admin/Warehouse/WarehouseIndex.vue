@@ -2,6 +2,17 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
+import { useForm } from '@inertiajs/vue3'
+
+const CreateWarehouseForm = useForm({
+            name: '',
+            location: '',
+            user_id: null,
+})
+
+const submit = () => {
+    CreateWarehouseForm.post(route('admin.warehouse.store'))
+}
 </script>
 
 <template>
@@ -24,8 +35,8 @@ import NavButton from '@/Shared/Components/NavButton.vue';
                                 :active="true"/>
                             <NavButton 
                                 title="Mostrar" route="warehouse.index"/>
-                            <NavButton 
-                                title="Borrar"
+                            <NavButton
+                                title="Editar"
                                 route="warehouse.index"/>
                     </div>
                 </div>
@@ -38,9 +49,9 @@ import NavButton from '@/Shared/Components/NavButton.vue';
                             <h2 class="text-xl font-bold text-gray-700 md:text-center">Nuevo almacen</h2>
                         </div>
 
-                        <form action="#" class="md:flex md:flex-col md:items-center">
+                        <form @submit.prevent="submit" class="md:flex md:flex-col md:items-center">
 
-                            <div class="w-full sm:w-1/2">
+                            <div class="w-full sm:w-1/2 mb-4">
                                 <div class="mb-5 md:flex md:items-end">
                                     <label
                                         for="name"
@@ -52,13 +63,15 @@ import NavButton from '@/Shared/Components/NavButton.vue';
                                         type="text"
                                         name="name"
                                         id="name"
-                                        placeholder="Nombre del almacen"
+                                        v-model="CreateWarehouseForm.name"
+                                        placeholder="Nombre del almacen.."
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     />
+
                                 </div>
                             </div>
 
-                            <div class="w-full sm:w-1/2">
+                            <div class="w-full sm:w-1/2 mb-4">
                                 <div class="mb-5 md:flex md:items-end">
                                     <label
                                         for="location"
@@ -70,6 +83,7 @@ import NavButton from '@/Shared/Components/NavButton.vue';
                                         type="text"
                                         name="location"
                                         id="location"
+                                        v-model="CreateWarehouseForm.location"
                                         placeholder="Calle 123, Ciudad, Estado..."
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     />

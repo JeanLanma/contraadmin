@@ -35,5 +35,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/admin/warehouse', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
+    Route::post('/admin/warehouse', [WarehouseController::class, 'store'])->name('admin.warehouse.store');
 
 });
