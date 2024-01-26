@@ -80,17 +80,17 @@ const submit = () => {
                                 <tr>
                                 <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
                                 <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Locación</th>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                                <!-- <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="warehouse in props.warehouses.data" class="hover:bg-grey-lighter">
                                     <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
-                                    <td class="py-4 px-6 border-b border-grey-light">
+                                    <!-- <td class="py-4 px-6 border-b border-grey-light">
                                         <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">Edit</a>
                                         <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">View</a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                             </table>
