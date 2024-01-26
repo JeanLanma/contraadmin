@@ -5,6 +5,20 @@ import NavButton from '@/Shared/Components/NavButton.vue';
 import { useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
 
+const props = defineProps({
+    warehouses: {
+        type: Array,
+        required: true
+    }
+})
+
+// Pagination
+const getPagination = (PaginatedObj) => {
+    return {
+
+    }
+}
+
 const toast = useToast();
 
 const CreateWarehouseForm = useForm({
@@ -57,6 +71,54 @@ const submit = () => {
                     </div>
                 </div>
                 
+                <!-- List warehouses -->
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                    <div class="mx-auto">
+                        <div class="bg-white shadow-md rounded my-6">
+                            <table class="text-left w-full border-collapse"> <!--Border collapse doesn't work on this site yet but it's available in newer tailwind versions -->
+                            <thead>
+                                <tr>
+                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
+                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Locación</th>
+                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="warehouse in props.warehouses.data" class="hover:bg-grey-lighter">
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">
+                                        <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">Edit</a>
+                                        <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- pagination -->
+                    <div class="mb-2 flex justify-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="inline-flex -space-x-px">
+                                <li v-for="link in props.warehouses.links">
+                                    <a v-if="link.active" href="#" aria-current="page"
+					                    class="bg-blue-50 rounded text-blue-600 hover:bg-blue-100 hover:text-blue-700  py-2 px-3">
+                                        <span v-html="link.label">
+                                        </span>
+                                    </a>
+                                    <a href="#"
+                                        v-else
+                                        class="bg-white rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 leading-tight py-2 px-3">
+                                        <span v-html="link.label">
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+               </div>    
+                <!-- List warehouses -->
                 <!-- Create form -->
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div class="px-4 md:py-4 py-2">
