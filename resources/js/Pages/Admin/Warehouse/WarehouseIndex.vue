@@ -149,7 +149,7 @@ const submit = () => {
                 <!-- List warehouses -->
                 <transition name="slide-up" mode="out-in">
 
-                <div v-if="activeOption === 'read'" class="mx-auto max-w-xs overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                <div v-if="activeOption === 'read'" class="mx-auto max-w-xs md:max-w-none overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div>
                         <div class="bg-white shadow-md rounded my-6 overflow-auto">
 
@@ -157,7 +157,7 @@ const submit = () => {
                                 <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Lista de almacenes</h2>
                             </div>
 
-                            <table class="text-left">
+                            <table class="text-left w-full">
                                 <thead>
                                     <tr>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
