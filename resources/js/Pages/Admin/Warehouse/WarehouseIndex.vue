@@ -4,19 +4,28 @@ import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
 import { useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
+import { ref } from 'vue';
 
 const props = defineProps({
     warehouses: {
-        type: Array,
+        type: Object,
         required: true
     }
 })
 
-// Pagination
-const getPagination = (PaginatedObj) => {
-    return {
 
-    }
+const options = {
+    READ: 'read',
+    CREATE: 'create',
+    EDIT: 'edit',
+    DELETE: 'delete'
+}
+const activeOption = ref('read');
+const setActiveOption = (option) => {
+    activeOption.value = option;
+}
+const isActive = (option) => {
+    return activeOption.value === option;
 }
 
 const toast = useToast();
@@ -30,10 +39,10 @@ const CreateWarehouseForm = useForm({
 const submit = () => {
     CreateWarehouseForm.post(route('admin.warehouse.store'),{
         onSuccess: (response) => {
-            console.log({response});
             toast.success('Almacen creado con exito!',{
                 position: POSITION.TOP_CENTER
             })
+            CreateWarehouseForm.reset()
         },
         onError: () => {
             toast.error('Algo salio mal, intentalo de nuevo')
@@ -43,6 +52,8 @@ const submit = () => {
         }
     })
 }
+
+console.log(activeOption.value);
 </script>
 
 <template>
@@ -60,22 +71,34 @@ const submit = () => {
                 <div class="w-full">
                     <div class="px-4 md:px-0 flex flex-col md:flex-row gap-4">
                             <NavButton 
-                                title="Añadir almacen"
+                                title="Añadir"
                                 route="warehouse.index"
-                                :active="true"/>
+                                @click="setActiveOption(options.CREATE)"
+                                :active="isActive(options.CREATE)"/>
                             <NavButton 
-                                title="Mostrar" route="warehouse.index"/>
+                                title="Mostrar" route="warehouse.index"
+                                @click="setActiveOption(options.READ)"
+                                :active="isActive(options.READ)"/>
+                                
                             <NavButton
                                 title="Editar"
                                 route="warehouse.index"/>
                     </div>
                 </div>
+
                 
                 <!-- List warehouses -->
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                <transition name="slide-up" mode="out-in">
+
+                <div v-if="activeOption === 'read'" class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div class="mx-auto">
                         <div class="bg-white shadow-md rounded my-6">
-                            <table class="text-left w-full border-collapse"> <!--Border collapse doesn't work on this site yet but it's available in newer tailwind versions -->
+
+                            <div>
+                                <h2 class="text-2xl font-bold py-4 px-6 text-gray-700">Lista de almacenes</h2>
+                            </div>
+
+                            <table class="text-left w-full border-collapse">
                             <thead>
                                 <tr>
                                 <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
@@ -118,13 +141,12 @@ const submit = () => {
                         </nav>
                     </div>
                </div>    
-                <!-- List warehouses -->
-                <!-- Create form -->
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+
+                <div v-else-if="activeOption === 'create'" class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div class="px-4 md:py-4 py-2">
 
                         <div class="my-4">
-                            <h2 class="text-xl font-bold text-gray-700 md:text-center">Nuevo almacen</h2>
+                            <h2 class="text-2xl font-bold text-gray-700 md:text-center">Nuevo almacen.</h2>
                         </div>
 
                         <form @submit.prevent="submit" class="md:flex md:flex-col md:items-center">
@@ -179,6 +201,7 @@ const submit = () => {
                         </form>
                     </div>
                 </div>
+                </transition>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <WarehouseList />
