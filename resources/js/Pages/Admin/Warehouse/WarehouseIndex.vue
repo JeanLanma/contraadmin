@@ -5,6 +5,9 @@ import NavButton from '@/Shared/Components/NavButton.vue';
 import { useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
 import { ref } from 'vue';
+import DialogModal from '@/Components/DialogModal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 
 const props = defineProps({
     warehouses: {
@@ -26,6 +29,13 @@ const setActiveOption = (option) => {
 }
 const isActive = (option) => {
     return activeOption.value === option;
+}
+
+const currentWarehouse = ref(null);
+const showModal = ref(false);
+const setModal = (warehouse) => {
+    currentWarehouse.value = warehouse;
+    showModal.value = true;
 }
 
 const toast = useToast();
@@ -53,18 +63,67 @@ const submit = () => {
     })
 }
 
-console.log(activeOption.value);
 </script>
 
 <template>
     <AdminLayout title="Almacen">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                {{ currentWarehouse ? currentWarehouse.name : 'Almacen' }}
             </h2>
         </template>
 
         <template #content>
+
+        <!--  -->
+        <DialogModal :show="showModal" @close="showModal = false">
+            <template #title>
+                Editar almacen
+            </template>
+
+            <template #content>
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700">
+                            Nombre
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            v-model="currentWarehouse.name"
+                            placeholder="Nombre del almacen.."
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        />
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <label for="location" class="block text-sm font-medium text-gray-700">
+                            Dirección
+                        </label>
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            v-model="currentWarehouse.location"
+                            placeholder="Calle 123, Ciudad, Estado..."
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        />
+                    </div>
+                </div>
+            </template>
+
+            <template #footer>
+                <SecondaryButton @click.native="showModal = false">
+                    Cancel
+                </SecondaryButton>
+
+                <DangerButton class="ml-2">
+                    Delete Account
+                </DangerButton>
+            </template>
+        </DialogModal>
+        <!--  -->
         <div class="w-full py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 
@@ -90,32 +149,32 @@ console.log(activeOption.value);
                 <!-- List warehouses -->
                 <transition name="slide-up" mode="out-in">
 
-                <div v-if="activeOption === 'read'" class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
-                    <div class="mx-auto">
-                        <div class="bg-white shadow-md rounded my-6">
+                <div v-if="activeOption === 'read'" class="mx-auto max-w-xs overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                    <div>
+                        <div class="bg-white shadow-md rounded my-6 overflow-auto">
 
                             <div>
-                                <h2 class="text-2xl font-bold py-4 px-6 text-gray-700">Lista de almacenes</h2>
+                                <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Lista de almacenes</h2>
                             </div>
 
-                            <table class="text-left w-full border-collapse">
-                            <thead>
-                                <tr>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Locación</th>
-                                <!-- <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="warehouse in props.warehouses.data" class="hover:bg-grey-lighter">
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
-                                    <!-- <td class="py-4 px-6 border-b border-grey-light">
-                                        <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">Edit</a>
-                                        <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">View</a>
-                                    </td> -->
-                                </tr>
-                            </tbody>
+                            <table class="text-left">
+                                <thead>
+                                    <tr>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Locación</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="warehouse in props.warehouses.data" class="hover:bg-grey-lighter">
+                                        <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
+                                        <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
+                                        <td class="py-4 px-6 border-b border-grey-light flex">
+                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">Edit</button>
+                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -125,12 +184,12 @@ console.log(activeOption.value);
                         <nav aria-label="Page navigation example">
                             <ul class="inline-flex -space-x-px">
                                 <li v-for="link in props.warehouses.links">
-                                    <a v-if="link.active" href="#" aria-current="page"
+                                    <a v-if="link.active" :href="link.url" aria-current="page"
 					                    class="bg-blue-50 rounded text-blue-600 hover:bg-blue-100 hover:text-blue-700  py-2 px-3">
                                         <span v-html="link.label">
                                         </span>
                                     </a>
-                                    <a href="#"
+                                    <a :href="link.url"
                                         v-else
                                         class="bg-white rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 leading-tight py-2 px-3">
                                         <span v-html="link.label">
