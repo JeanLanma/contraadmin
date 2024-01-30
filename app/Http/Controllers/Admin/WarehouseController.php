@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Warehouse\StoreWarehouseRequest;
+use App\Models\Warehouse\Warehouse;
 use App\Repositories\Warehouse\GetWarehouse;
 use App\Repositories\Warehouse\PostWarehouse;
+use App\Repositories\Warehouse\UpdateWarehouse;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
@@ -34,6 +36,23 @@ class WarehouseController extends Controller
                 'name'=> request('name'),
                 'location'=> request('location'),
                 'user_id'=> auth()->user()->id,
+            ]
+        ]);
+    }
+
+    public function update(StoreWarehouseRequest $request, Warehouse $id)
+    {
+        $warehouse = $id;
+        
+        UpdateWarehouse::fromRequest($request->validated(), $warehouse);
+
+        return redirect()->back()->with([
+            'updated' => $warehouse,
+            'status' => 'success',
+            'message' => 'Warehouse updated successfully',
+            'data' => [
+                'name'=> request('name'),
+                'location'=> request('location'),
             ]
         ]);
     }

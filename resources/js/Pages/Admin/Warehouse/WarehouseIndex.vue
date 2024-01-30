@@ -2,12 +2,14 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
-import { useForm } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
 import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
+import { logout } from '@/Utils/Session.js';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
     warehouses: {
@@ -31,11 +33,36 @@ const isActive = (option) => {
     return activeOption.value === option;
 }
 
-const currentWarehouse = ref(null);
 const showModal = ref(false);
 const setModal = (warehouse) => {
-    currentWarehouse.value = warehouse;
+    console.log(warehouse);
+    currentWarehouse.name = warehouse.name;
+    currentWarehouse.location = warehouse.location;
+    currentWarehouse.id = warehouse.id;
     showModal.value = true;
+}
+
+const currentWarehouse = useForm({
+    name: '',
+    location: '',
+    user_id: null,
+})
+const updateCurrentWarehouse = () => {
+    currentWarehouse.put(route('admin.warehouse.update', {id: currentWarehouse.id}), {
+        onSuccess: (response) => {
+            toast.success('Almacen actualizado con exito!',{
+                position: POSITION.TOP_CENTER
+            })
+            showModal.value = false;
+        },
+        onError: () => {
+            toast.error('Algo salio mal, intentalo de nuevo')
+            showModal.value = false;
+        },
+        onFinish: () => {
+            showModal.value = false;
+        }
+    })
 }
 
 const toast = useToast();
@@ -115,12 +142,12 @@ const submit = () => {
 
             <template #footer>
                 <SecondaryButton @click.native="showModal = false">
-                    Cancel
+                    Cancelar
                 </SecondaryButton>
 
-                <DangerButton class="ml-2">
-                    Delete Account
-                </DangerButton>
+                <PrimaryButton @click.native="updateCurrentWarehouse()" class="ml-2">
+                    Guardar
+                </PrimaryButton>
             </template>
         </DialogModal>
         <!--  -->
@@ -166,7 +193,7 @@ const submit = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="warehouse in props.warehouses.data" class="hover:bg-grey-lighter">
+                                    <tr v-for="warehouse in props.warehouses.data" class="hover:bg-gray-100">
                                         <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
                                         <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
                                         <td class="py-4 px-6 border-b border-grey-light flex">
