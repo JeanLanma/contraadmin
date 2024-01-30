@@ -90,6 +90,9 @@ const submit = () => {
     })
 }
 
+
+// Utils
+const isMobile = window.innerWidth < 768;
 </script>
 
 <template>
@@ -176,7 +179,7 @@ const submit = () => {
                 <!-- List warehouses -->
                 <transition name="slide-up" mode="out-in">
 
-                <div v-if="activeOption === 'read'" class="mx-auto max-w-xs md:max-w-none overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                <div v-if="activeOption === 'read'" class="hidden md:block mx-auto max-w-xs md:max-w-none overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div>
                         <div class="bg-white shadow-md rounded my-6 overflow-auto">
 
@@ -226,7 +229,7 @@ const submit = () => {
                             </ul>
                         </nav>
                     </div>
-               </div>    
+               </div>
 
                 <div v-else-if="activeOption === 'create'" class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div class="px-4 md:py-4 py-2">
@@ -288,6 +291,23 @@ const submit = () => {
                     </div>
                 </div>
                 </transition>
+                                <!-- Mobile List -->
+                <div v-if="activeOption === 'read'" v-for="warehouse in props.warehouses.data" class="md:hidden max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+                    <div class="md:flex">
+                        <div class="p-8">
+                            <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Patient: Jane Doe</div>
+                            <p class="block mt-1 text-lg leading-tight font-medium text-black">{{warehouse.name}}</p>
+                            <p class="mt-2 text-gray-500">{{ warehouse.location }}</p>
+                            <button @click.native="setModal(warehouse)" class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                Editar
+                            </button>
+                            <button disabled class="mt-5 ml-3 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile List -->
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <WarehouseList />
