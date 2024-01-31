@@ -7,10 +7,10 @@ import { useToast, POSITION } from "vue-toastification";
 import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import { logout } from '@/Utils/Session.js';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
+import WarehouseTable from './Partials/WarehouseTable.vue';
+import WarehousePagination from '@/Shared/Components/WarehousePagination.vue';
+import CreateWarehouseForm from './Partials/CreateWarehouseForm.vue';
 
 const props = defineProps({
     warehouses: {
@@ -19,6 +19,7 @@ const props = defineProps({
     }
 })
 
+const toast = useToast();
 
 const options = {
     READ: 'read',
@@ -70,46 +71,21 @@ const updateCurrentWarehouse = () => {
     })
 }
 
-const toast = useToast();
-
-const CreateWarehouseForm = useForm({
-            name: '',
-            location: '',
-            user_id: null,
-})
-
-const submit = () => {
-    CreateWarehouseForm.post(route('admin.warehouse.store'),{
-        onSuccess: (response) => {
-            toast.success('Almacen creado con exito!',{
-                position: POSITION.TOP_CENTER
-            })
-            CreateWarehouseForm.reset()
-        },
-        onError: () => {
-            toast.error('Algo salio mal, intentalo de nuevo')
-        },
-        onFinish: () => {
-            CreateWarehouseForm.reset()
-        }
-    })
-}
-
-
 // Delete warehouse
-const confirmingWarehouseDeletion = ref(false);
 const deleteWarehouse = (WarehouseID) => {
     router.delete(route('admin.warehouse.destroy', {id: WarehouseID}), {
         onSuccess: (response) => {
             toast.success('Almacen eliminado con exito!',{
                 position: POSITION.TOP_CENTER
             })
+            showModal.value = false;
         },
         onError: () => {
             toast.error('Algo salio mal, intentalo de nuevo')
         },
         onFinish: () => {
             CreateWarehouseForm.reset()
+            showModal.value = false;
         }
     })
 }
@@ -175,31 +151,11 @@ const deleteWarehouse = (WarehouseID) => {
                     Cancelar
                 </SecondaryButton>
 
-                <PrimaryButton @click.native="updateCurrentWarehouse()" class="ml-2">
+                <PrimaryButton :disabled="currentWarehouse.processing" @click.native="updateCurrentWarehouse()" class="ml-2">
                     Guardar
                 </PrimaryButton>
             </template>
         </DialogModal>
-
-        <ConfirmationModal :show="confirmingWarehouseDeletion" @close="confirmingWarehouseDeletion = false">
-            <template #title>
-                Delete Account
-            </template>
-
-            <template #content>
-                Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click.native="confirmingUserDeletion = false">
-                    Nevermind
-                </SecondaryButton>
-
-                <DangerButton class="ml-2" @click.native="deleteUser" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Delete Account
-                </DangerButton>
-            </template>
-        </ConfirmationModal>
         <!--  -->
         <div class="w-full py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -234,47 +190,13 @@ const deleteWarehouse = (WarehouseID) => {
                                 <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Lista de almacenes</h2>
                             </div>
 
-                            <table class="text-left w-full">
-                                <thead>
-                                    <tr>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Nombre</th>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Locación</th>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="warehouse in props.warehouses.data" class="hover:bg-gray-100">
-                                        <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
-                                        <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
-                                        <td class="py-4 px-6 border-b border-grey-light flex">
-                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">editar</button>
-                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">ver</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <WarehouseTable :warehouses="props.warehouses" :setModal="setModal" />
                         </div>
                     </div>
                     
                     <!-- pagination -->
                     <div class="mb-2 flex justify-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="inline-flex -space-x-px">
-                                <li v-for="link in props.warehouses.links">
-                                    <a v-if="link.active" :href="link.url" aria-current="page"
-					                    class="bg-blue-50 rounded text-blue-600 hover:bg-blue-100 hover:text-blue-700  py-2 px-3">
-                                        <span v-html="link.label">
-                                        </span>
-                                    </a>
-                                    <a :href="link.url"
-                                        v-else
-                                        class="bg-white rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 leading-tight py-2 px-3">
-                                        <span v-html="link.label">
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <WarehousePagination :links="props.warehouses.links" />
                     </div>
                </div>
 
@@ -285,56 +207,7 @@ const deleteWarehouse = (WarehouseID) => {
                             <h2 class="text-2xl font-bold text-gray-700 md:text-center">Nuevo almacen.</h2>
                         </div>
 
-                        <form @submit.prevent="submit" class="md:flex md:flex-col md:items-center">
-
-                            <div class="w-full sm:w-1/2 mb-4">
-                                <div class="mb-5 md:flex md:items-end">
-                                    <label
-                                        for="name"
-                                        class="mb-3 block text-base font-medium text-[#07074D] md:mr-4"
-                                    >
-                                        Nombre
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        v-model="CreateWarehouseForm.name"
-                                        placeholder="Nombre del almacen.."
-                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    />
-
-                                </div>
-                            </div>
-
-                            <div class="w-full sm:w-1/2 mb-4">
-                                <div class="mb-5 md:flex md:items-end">
-                                    <label
-                                        for="location"
-                                        class="mb-3 block text-base font-medium text-[#07074D] md:mr-4"
-                                    >
-                                        Dirección
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="location"
-                                        id="location"
-                                        v-model="CreateWarehouseForm.location"
-                                        placeholder="Calle 123, Ciudad, Estado..."
-                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="md:w-1/3">
-                                <button
-                                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none w-full"
-                                >
-                                    Agregar
-                                </button>
-                            </div>
-
-                        </form>
+                        <CreateWarehouseForm />
                     </div>
                 </div>
                 </transition>
