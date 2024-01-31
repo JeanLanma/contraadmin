@@ -10,6 +10,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import { logout } from '@/Utils/Session.js';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 
 const props = defineProps({
     warehouses: {
@@ -33,12 +34,16 @@ const isActive = (option) => {
     return activeOption.value === option;
 }
 
-const showModal = ref(false);
-const setModal = (warehouse) => {
-    console.log(warehouse);
+// Update warehouse
+const setCurrentWarehouse = (warehouse) => {
     currentWarehouse.name = warehouse.name;
     currentWarehouse.location = warehouse.location;
     currentWarehouse.id = warehouse.id;
+}
+
+const showModal = ref(false);
+const setModal = (warehouse) => {
+    setCurrentWarehouse(warehouse);
     showModal.value = true;
 }
 
@@ -91,8 +96,23 @@ const submit = () => {
 }
 
 
-// Utils
-const isMobile = window.innerWidth < 768;
+// Delete warehouse
+const confirmingWarehouseDeletion = ref(false);
+const deleteWarehouse = (WarehouseID) => {
+    router.delete(route('admin.warehouse.destroy', {id: WarehouseID}), {
+        onSuccess: (response) => {
+            toast.success('Almacen eliminado con exito!',{
+                position: POSITION.TOP_CENTER
+            })
+        },
+        onError: () => {
+            toast.error('Algo salio mal, intentalo de nuevo')
+        },
+        onFinish: () => {
+            CreateWarehouseForm.reset()
+        }
+    })
+}
 </script>
 
 <template>
@@ -108,7 +128,14 @@ const isMobile = window.innerWidth < 768;
         <!--  -->
         <DialogModal :show="showModal" @close="showModal = false">
             <template #title>
-                Editar almacen
+                <div class="flex justify-between items-center">
+                    <span>
+                        Editar almacen
+                    </span>
+                    <button @click.native="deleteWarehouse(currentWarehouse.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Eliminar
+                    </button>
+                </div>
             </template>
 
             <template #content>
@@ -153,6 +180,26 @@ const isMobile = window.innerWidth < 768;
                 </PrimaryButton>
             </template>
         </DialogModal>
+
+        <ConfirmationModal :show="confirmingWarehouseDeletion" @close="confirmingWarehouseDeletion = false">
+            <template #title>
+                Delete Account
+            </template>
+
+            <template #content>
+                Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
+            </template>
+
+            <template #footer>
+                <SecondaryButton @click.native="confirmingUserDeletion = false">
+                    Nevermind
+                </SecondaryButton>
+
+                <DangerButton class="ml-2" @click.native="deleteUser" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Delete Account
+                </DangerButton>
+            </template>
+        </ConfirmationModal>
         <!--  -->
         <div class="w-full py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -200,8 +247,8 @@ const isMobile = window.innerWidth < 768;
                                         <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
                                         <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
                                         <td class="py-4 px-6 border-b border-grey-light flex">
-                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">Edit</button>
-                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">View</button>
+                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">editar</button>
+                                            <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">ver</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -291,17 +338,17 @@ const isMobile = window.innerWidth < 768;
                     </div>
                 </div>
                 </transition>
-                                <!-- Mobile List -->
+                <!-- Mobile List -->
                 <div v-if="activeOption === 'read'" v-for="warehouse in props.warehouses.data" class="md:hidden max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
                     <div class="md:flex">
                         <div class="p-8">
-                            <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Patient: Jane Doe</div>
+                            <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">&nbsp;</div>
                             <p class="block mt-1 text-lg leading-tight font-medium text-black">{{warehouse.name}}</p>
                             <p class="mt-2 text-gray-500">{{ warehouse.location }}</p>
-                            <button @click.native="setModal(warehouse)" class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <button @click.native="setModal(warehouse)" class="mt-5 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                                 Editar
                             </button>
-                            <button disabled class="mt-5 ml-3 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <button @click.native="deleteWarehouse(warehouse.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Eliminar
                             </button>
                         </div>

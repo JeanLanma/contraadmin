@@ -37,5 +37,6 @@ Route::middleware([
     Route::get('/admin/warehouse', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
     Route::post('/admin/warehouse', [WarehouseController::class, 'store'])->name('admin.warehouse.store');
     Route::put('/admin/warehouse/{id}', [WarehouseController::class, 'update'])->name('admin.warehouse.update');
+    Route::delete('/admin/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('admin.warehouse.destroy');
 
 });
