@@ -18,7 +18,6 @@ class WarehouseController extends Controller
     public function index()
     {
         $warehouses = GetWarehouse::Paginated(15);
-        // return response()->json($warehouses);
         return inertia('Admin/Warehouse/WarehouseIndex', [
             'warehouses' => $warehouses
         ]);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Branches\StoreController;
 use App\Http\Controllers\Admin\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,11 @@ Route::middleware([
 
     Route::get('/admin/warehouse', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
     Route::post('/admin/warehouse', [WarehouseController::class, 'store'])->name('admin.warehouse.store');
+    Route::put('/admin/warehouse/{id}', [WarehouseController::class, 'update'])->name('admin.warehouse.update');
+    Route::delete('/admin/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('admin.warehouse.destroy');
+
+    Route::get('/admin/stores', [StoreController::class, 'index'])->name('admin.store.index');
+    Route::post('/admin/stores', [WarehouseController::class, 'store'])->name('admin.warehouse.store');
     Route::put('/admin/warehouse/{id}', [WarehouseController::class, 'update'])->name('admin.warehouse.update');
     Route::delete('/admin/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('admin.warehouse.destroy');
 

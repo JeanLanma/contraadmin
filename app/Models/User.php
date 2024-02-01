@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Store\Store;
 use App\Models\Warehouse\Warehouse;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function warehouses()
     {
         return $this->hasMany(Warehouse::class);
+    }
+
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
     }
 }
