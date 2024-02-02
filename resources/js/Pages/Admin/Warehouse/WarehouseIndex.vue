@@ -1,6 +1,5 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
 import { router, useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
@@ -229,9 +228,6 @@ const deleteWarehouse = (WarehouseID) => {
                 </div>
                 <!-- Mobile List -->
 
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <WarehouseList />
-                </div>
             </div>
         </div>
         </template>

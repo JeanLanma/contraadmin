@@ -1,6 +1,5 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import WarehouseList from './Partials/WarehouseList.vue';
 import NavButton from '@/Shared/Components/NavButton.vue';
 import { router, useForm } from '@inertiajs/vue3'
 import { useToast, POSITION } from "vue-toastification";
@@ -11,9 +10,10 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import WarehouseTable from './Partials/WarehouseTable.vue';
 import WarehousePagination from '@/Shared/Components/WarehousePagination.vue';
 import CreateWarehouseForm from './Partials/CreateWarehouseForm.vue';
+import { CRUDOperation } from '@/Utils/Utils';
 
 const props = defineProps({
-    warehouses: {
+    stores: {
         type: Object,
         required: true
     }
@@ -21,12 +21,6 @@ const props = defineProps({
 
 const toast = useToast();
 
-const options = {
-    READ: 'read',
-    CREATE: 'create',
-    EDIT: 'edit',
-    DELETE: 'delete'
-}
 const activeOption = ref('read');
 const setActiveOption = (option) => {
     activeOption.value = option;
@@ -165,16 +159,13 @@ const deleteWarehouse = (WarehouseID) => {
                             <NavButton 
                                 title="Añadir"
                                 route="warehouse.index"
-                                @click="setActiveOption(options.CREATE)"
-                                :active="isActive(options.CREATE)"/>
+                                @click="setActiveOption(CRUDOperation.Create)"
+                                :active="isActive(CRUDOperation.Create)"/>
                             <NavButton 
-                                title="Mostrar" route="warehouse.index"
-                                @click="setActiveOption(options.READ)"
-                                :active="isActive(options.READ)"/>
-                                
-                            <NavButton
-                                title="Editar"
-                                route="warehouse.index"/>
+                                title="Mostrar" 
+                                route="warehouse.index"
+                                @click="setActiveOption(CRUDOperation.Read)"
+                                :active="isActive(CRUDOperation.Read)"/>
                     </div>
                 </div>
 
