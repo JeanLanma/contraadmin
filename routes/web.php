@@ -40,9 +40,9 @@ Route::middleware([
     Route::put('/admin/warehouse/{id}', [WarehouseController::class, 'update'])->name('admin.warehouse.update');
     Route::delete('/admin/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('admin.warehouse.destroy');
 
-    Route::get('/admin/stores', [StoreController::class, 'index'])->name('admin.store.index');
-    // Route::post('/admin/stores', [WarehouseController::class, 'store'])->name('admin.warehouse.store');
-    // Route::put('/admin/warehouse/{id}', [WarehouseController::class, 'update'])->name('admin.warehouse.update');
-    // Route::delete('/admin/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('admin.warehouse.destroy');
+    Route::get('/admin/store', [StoreController::class, 'index'])->name('admin.store.index');
+    Route::post('/admin/store', [StoreController::class, 'store'])->name('admin.store.store');
+    Route::put('/admin/store/{id}', [StoreController::class, 'update'])->name('admin.store.update');
+    Route::delete('/admin/store/{id}', [StoreController::class, 'destroy'])->name('admin.store.destroy');
 
 });

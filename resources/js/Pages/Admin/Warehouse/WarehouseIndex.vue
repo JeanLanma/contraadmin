@@ -186,7 +186,7 @@ const deleteWarehouse = (WarehouseID) => {
                         <div class="bg-white shadow-md rounded my-6 overflow-auto">
 
                             <div>
-                                <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Lista de almacenes</h2>
+                                <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Almacenes</h2>
                             </div>
 
                             <WarehouseTable :warehouses="props.warehouses" :setModal="setModal" />

@@ -7,9 +7,9 @@ import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import WarehouseTable from './Partials/WarehouseTable.vue';
+import StoresTable from './Partials/StoresTable.vue';
 import WarehousePagination from '@/Shared/Components/WarehousePagination.vue';
-import CreateWarehouseForm from './Partials/CreateWarehouseForm.vue';
+import CreateStoresForm from './Partials/CreateStoresForm.vue';
 import { CRUDOperation } from '@/Utils/Utils';
 
 const props = defineProps({
@@ -17,6 +17,12 @@ const props = defineProps({
         type: Object,
         required: true
     }
+})
+
+const currentModel = useForm({
+    name: '',
+    location: '',
+    user_id: null,
 })
 
 const toast = useToast();
@@ -29,26 +35,21 @@ const isActive = (option) => {
     return activeOption.value === option;
 }
 
-// Update warehouse
-const setCurrentWarehouse = (warehouse) => {
-    currentWarehouse.name = warehouse.name;
-    currentWarehouse.location = warehouse.location;
-    currentWarehouse.id = warehouse.id;
+// Update model
+const setCurrentModel = (model) => {
+    currentModel.name = model.name;
+    currentModel.location = model.location;
+    currentModel.id = model.id;
 }
 
 const showModal = ref(false);
 const setModal = (warehouse) => {
-    setCurrentWarehouse(warehouse);
+    setCurrentModel(warehouse);
     showModal.value = true;
 }
 
-const currentWarehouse = useForm({
-    name: '',
-    location: '',
-    user_id: null,
-})
-const updateCurrentWarehouse = () => {
-    currentWarehouse.put(route('admin.warehouse.update', {id: currentWarehouse.id}), {
+const updateCurrentModel = () => {
+    currentModel.put(route('admin.store.update', {id: currentModel.id}), {
         onSuccess: (response) => {
             toast.success('Almacen actualizado con exito!',{
                 position: POSITION.TOP_CENTER
@@ -66,10 +67,10 @@ const updateCurrentWarehouse = () => {
 }
 
 // Delete warehouse
-const deleteWarehouse = (WarehouseID) => {
-    router.delete(route('admin.warehouse.destroy', {id: WarehouseID}), {
+const deleteModel = (ModelID) => {
+    router.delete(route('admin.store.destroy', {id: ModelID}), {
         onSuccess: (response) => {
-            toast.success('Almacen eliminado con exito!',{
+            toast.success('Eliminación realizada con exito!',{
                 position: POSITION.TOP_CENTER
             })
             showModal.value = false;
@@ -78,7 +79,7 @@ const deleteWarehouse = (WarehouseID) => {
             toast.error('Algo salio mal, intentalo de nuevo')
         },
         onFinish: () => {
-            CreateWarehouseForm.reset()
+            CreateStoresForm.reset()
             showModal.value = false;
         }
     })
@@ -86,10 +87,10 @@ const deleteWarehouse = (WarehouseID) => {
 </script>
 
 <template>
-    <AdminLayout title="Almacen">
+    <AdminLayout title="Tiendas">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ currentWarehouse ? currentWarehouse.name : 'Almacen' }}
+                {{ currentModel ? currentModel.name : 'Tienda ¿?' }}
             </h2>
         </template>
 
@@ -102,7 +103,7 @@ const deleteWarehouse = (WarehouseID) => {
                     <span>
                         Editar almacen
                     </span>
-                    <button @click.native="deleteWarehouse(currentWarehouse.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <button @click.native="deleteModel(currentModel.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         Eliminar
                     </button>
                 </div>
@@ -118,7 +119,7 @@ const deleteWarehouse = (WarehouseID) => {
                             type="text"
                             name="name"
                             id="name"
-                            v-model="currentWarehouse.name"
+                            v-model="currentModel.name"
                             placeholder="Nombre del almacen.."
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -132,7 +133,7 @@ const deleteWarehouse = (WarehouseID) => {
                             type="text"
                             name="location"
                             id="location"
-                            v-model="currentWarehouse.location"
+                            v-model="currentModel.location"
                             placeholder="Calle 123, Ciudad, Estado..."
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
@@ -145,7 +146,7 @@ const deleteWarehouse = (WarehouseID) => {
                     Cancelar
                 </SecondaryButton>
 
-                <PrimaryButton :disabled="currentWarehouse.processing" @click.native="updateCurrentWarehouse()" class="ml-2">
+                <PrimaryButton :disabled="currentModel.processing" @click.native="updateCurrentModel()" class="ml-2">
                     Guardar
                 </PrimaryButton>
             </template>
@@ -178,16 +179,16 @@ const deleteWarehouse = (WarehouseID) => {
                         <div class="bg-white shadow-md rounded my-6 overflow-auto">
 
                             <div>
-                                <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Lista de almacenes</h2>
+                                <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Tiendas</h2>
                             </div>
 
-                            <WarehouseTable :warehouses="props.warehouses" :setModal="setModal" />
+                            <StoresTable :stores="props.stores" :setModal="setModal" />
                         </div>
                     </div>
                     
                     <!-- pagination -->
                     <div class="mb-2 flex justify-center">
-                        <WarehousePagination :links="props.warehouses.links" />
+                        <WarehousePagination :links="props.stores.links" />
                     </div>
                </div>
 
@@ -195,24 +196,24 @@ const deleteWarehouse = (WarehouseID) => {
                     <div class="px-4 md:py-4 py-2">
 
                         <div class="my-4">
-                            <h2 class="text-2xl font-bold text-gray-700 md:text-center">Nuevo almacen.</h2>
+                            <h2 class="text-2xl font-bold text-gray-700 md:text-center">Nueva tienda.</h2>
                         </div>
 
-                        <CreateWarehouseForm />
+                        <CreateStoresForm />
                     </div>
                 </div>
                 </transition>
                 <!-- Mobile List -->
-                <div v-if="activeOption === 'read'" v-for="warehouse in props.warehouses.data" class="md:hidden max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+                <div v-if="activeOption === 'read'" v-for="element in props.stores.data" class="md:hidden max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
                     <div class="md:flex">
                         <div class="p-8">
                             <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">&nbsp;</div>
-                            <p class="block mt-1 text-lg leading-tight font-medium text-black">{{warehouse.name}}</p>
-                            <p class="mt-2 text-gray-500">{{ warehouse.location }}</p>
-                            <button @click.native="setModal(warehouse)" class="mt-5 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            <p class="block mt-1 text-lg leading-tight font-medium text-black">{{element.name}}</p>
+                            <p class="mt-2 text-gray-500">{{ element.location }}</p>
+                            <button @click.native="setModal(element)" class="mt-5 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                                 Editar
                             </button>
-                            <button @click.native="deleteWarehouse(warehouse.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <button @click.native="deleteWarehouse(element.id)" class="mt-5 ml-3 px-4 py-2 border border-red-500 text-sm font-medium rounded-md text-red-500 hover:text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Eliminar
                             </button>
                         </div>
@@ -221,7 +222,7 @@ const deleteWarehouse = (WarehouseID) => {
                 <!-- Mobile List -->
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <WarehouseList />
+                    <!-- <WarehouseList /> -->
                 </div>
             </div>
         </div>

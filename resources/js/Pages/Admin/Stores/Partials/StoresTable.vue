@@ -1,7 +1,7 @@
 <script setup>
 
 const props = defineProps({
-    warehouses: {
+    stores: {
         type: Object,
         required: true,
     },
@@ -22,12 +22,12 @@ const props = defineProps({
         </tr>
     </thead>
     <tbody>
-        <tr v-for="warehouse in props.warehouses.data" class="hover:bg-gray-100">
-            <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.name }}</td>
-            <td class="py-4 px-6 border-b border-grey-light">{{ warehouse.location }}</td>
+        <tr v-for="element in props.stores.data" class="hover:bg-gray-100">
+            <td class="py-4 px-6 border-b border-grey-light">{{ element.name }}</td>
+            <td class="py-4 px-6 border-b border-grey-light">{{ element.location }}</td>
             <td class="py-4 px-6 border-b border-grey-light flex">
-                <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">editar</button>
-                <button @click.native="setModal(warehouse)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">ver</button>
+                <button @click.native="setModal(element)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">editar</button>
+                <button @click.native="setModal(element)" class="inline text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">ver</button>
             </td>
         </tr>
     </tbody>
