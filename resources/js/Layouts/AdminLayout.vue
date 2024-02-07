@@ -123,7 +123,7 @@ const openAside = () => {
                                     </a>
                                 </template>
                                 <template #NavLinkItems>
-                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a :href="route('admin.product.index')" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Productos</span>
                                         </div>
@@ -291,7 +291,7 @@ const openAside = () => {
                                     </a>
                                 </template>
                                 <template #NavLinkItems>
-                                    <a href="#" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
+                                    <a :href="route('admin.product.index')" class="block font-bold rounded-l-md py-2.5 px-4 ml-10 text-gray-500 hover:bg-gray-100">
                                         <div>
                                             <span>Productos</span>
                                         </div>

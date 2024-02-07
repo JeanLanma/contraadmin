@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Branches\StoreController;
+use App\Http\Controllers\Admin\Catalog\ProductController;
 use App\Http\Controllers\Admin\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,4 +46,5 @@ Route::middleware([
     Route::put('/admin/store/{id}', [StoreController::class, 'update'])->name('admin.store.update');
     Route::delete('/admin/store/{id}', [StoreController::class, 'destroy'])->name('admin.store.destroy');
 
+    Route::get('/admin/catalog/product', [ProductController::class, 'index'])->name('admin.product.index');
 });

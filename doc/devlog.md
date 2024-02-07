@@ -33,4 +33,15 @@ Se inicia la creacion de una primera version de los modelos
     si es solo un almacen o varios.
     Los almacenes seran asignados a las tiendas
 
-## 09/01/2024
+## 07/02/2024
+## Sobre los modelos
+Creacion estandar de un modelo en el proyecto
+- Usar espacios de nombre de acuerdo al modulo
+    - Ejemplo: App\Models\Catalog\Product
+- Usar el nombre del modelo en singular
+- Crear las relaciones
+- Crear los repositorios de acceso a datos
+-- Usando el patron de diseño Repository y espacios de nombre adecuados
+- Crear los controladores
+-- Usando espacios de nombre adecuados
+- Crear las rutas
