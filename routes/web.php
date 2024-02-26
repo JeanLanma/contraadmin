@@ -47,4 +47,5 @@ Route::middleware([
     Route::delete('/admin/store/{id}', [StoreController::class, 'destroy'])->name('admin.store.destroy');
 
     Route::get('/admin/catalog/product', [ProductController::class, 'index'])->name('admin.product.index');
+    Route::get('/admin/catalog/product/create', [ProductController::class, 'create'])->name('admin.product.create');
 });

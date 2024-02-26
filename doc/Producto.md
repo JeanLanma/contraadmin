@@ -65,4 +65,16 @@ Se muestra un formulario con los siguientes campos:
 ### Eliminar
 Se muestra un mensaje de confirmacion para eliminar el producto
 ### Ver
-Se muestra 
+Se muestra
+
+## Crear Producto - Script
+
+1.- Entrar a la pagina de Catalogo -> Productos
+2.- Hacer clic en el boton Agregar
+3.- Llenar el formulario con los siguientes datos:
+    - Nombre: Product 3
+    - Precio: 100
+    - Cantidad: 10
+    - Almacen: Almacen 1
+4.- Hacer clic en el boton Guardar
+5.- Verificar que el producto se haya creado

@@ -10,7 +10,13 @@ class ProductController extends Controller
 {
      public function index()
      {
-            $products = GetProducts::paginated(15);
-            return inertia('Admin/Products/ProductsIndex', compact('products'));
+          $products = GetProducts::paginated(15);
+          return inertia('Admin/Products/ProductsIndex', compact('products'));
+     }
+
+     public function create()
+     {
+          $products = GetProducts::paginated(15);
+          return inertia('Admin/Products/CreateProduct', compact('products'));
      }
 }
