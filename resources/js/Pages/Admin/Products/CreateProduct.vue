@@ -23,6 +23,10 @@ const props = defineProps({
 const currentModel = useForm({
     name: '',
     location: '',
+    price: '',
+    price_formatted: '',
+    quantity: '',
+    sku: '',
     user_id: null,
 })
 
@@ -86,6 +90,41 @@ const deleteModel = (ModelID) => {
     })
 }
 
+// Format input price as currency format: $ 1,000.00
+const FormatPrice = (price) => {
+
+    // Only accept numbers
+    if(isNaN(price) || price === '') {
+        return '';
+    }
+
+    currentModel.price = price;
+    const formattedPrice = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(price);
+
+    currentModel.price_formatted = formattedPrice;
+}
+
+const submitCreateProduct = () => {
+
+    return console.log(currentModel);
+    currentModel.post(route('admin.store.store'), {
+        onSuccess: (response) => {
+            toast.success('Almacen creado con exito!',{
+                position: POSITION.TOP_CENTER
+            })
+            CreateStoresForm.reset()
+        },
+        onError: () => {
+            toast.error('Algo salio mal, intentalo de nuevo')
+        },
+        onFinish: () => {
+            CreateStoresForm.reset()
+        }
+    })
+}
 console.log(props.products);
 </script>
 
@@ -177,7 +216,7 @@ console.log(props.products);
                 <!-- List warehouses -->
                 <transition name="slide-up" mode="out-in">
 
-                <div v-if="activeOption === 'read'" class="hidden bg-white md:block mx-auto max-w-xs md:max-w-none overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
+                <div v-if="activeOption === 'read'" class=" bg-white md:block mx-auto max-w-xs md:max-w-none overflow-hidden shadow-xl sm:rounded-lg mt-4 border-2">
                     <div>
                         <div class="bg-white rounded my-6 overflow-auto">
 
@@ -185,47 +224,68 @@ console.log(props.products);
                                 <h2 class="text-2xl font-bold py-4 pl-6 text-gray-700">Añadir un nuevo producto</h2>
                             </div>
 
-                            <div class="w-full xl:w-1/2 px-8">
-                                <form action="#">
+                            <div class="w-full flex-col flex md:flex-row">
+                                <div class="w-full xl:w-1/2 px-8">
+                                    <form @submit.prevent="submitCreateProduct">
 
-                                    <div>
-                                        <div>
-                                            <label for="name" class="text-sm font-semibold text-gray-500">Nombre del producto</label>
-                                        </div>
-                                        <div>
-                                            <input name="name" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="Nombre del producto...">
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4 justify-between">
-                                        <div class="grow">
+                                        <div class="mt-4">
                                             <div>
-                                                <label for="price" class="text-sm font-semibold text-gray-500">$ Precio</label>
+                                                <label for="name" class="text-sm font-semibold text-gray-500">Nombre del producto</label>
                                             </div>
                                             <div>
-                                                <input name="price" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="$...">
+                                                <input v-model="currentModel.name" name="name" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors font-bold text-gray-600" type="text" placeholder="Nombre del producto...">
                                             </div>
                                         </div>
-                                        <div class="grow">
-                                            <div>
-                                                <label for="quantity" class="text-sm font-semibold text-gray-500">Cantidad</label>
+                                        <div class="mt-4 flex gap-4 justify-between">
+                                            <div class="grow">
+                                                <div>
+                                                    <label for="price" class="text-sm font-semibold text-gray-500">$ Precio</label>
+                                                </div>
+                                                <div>
+                                                    <input @blur="FormatPrice(currentModel.price_formatted)" v-model="currentModel.price_formatted" name="price" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="$...">
+                                                </div>
                                             </div>
-                                            <div>
-                                                <input name="quantity" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="Cantidad dispobible">
+                                            <div class="grow">
+                                                <div>
+                                                    <label for="quantity" class="text-sm font-semibold text-gray-500">Cantidad</label>
+                                                </div>
+                                                <div>
+                                                    <input v-model="currentModel.quantity" name="quantity" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="Cantidad dispobible">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div>
-                                        <div>
-                                            <label for="sku" class="text-sm font-semibold text-gray-500">SKU</label>
+                                        <div class="mt-4">
+                                            <div>
+                                                <label for="sku" class="text-sm font-semibold text-gray-500">SKU</label>
+                                            </div>
+                                            <div>
+                                                <input v-model="currentModel.sku" name="sku" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="SKU...">
+                                            </div>
                                         </div>
-                                        <div>
-                                            <input name="sku" class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="text" placeholder="SKU...">
-                                        </div>
-                                    </div>
 
-                                </form>
+                                        <div class="mt-4">
+                                            <div>
+                                                <button class="w-full my-4 px-3 py-3 bg-indigo-500 text-white rounded-md font-semibold hover:bg-indigo-600 duration-150 hover:shadow-md hover:shadow-indigo-900">Guardar</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                                <div class="w-full xl:w-1/2 px-8 pt-9">
+                                    <div class="flex w-full items-center justify-center bg-grey-lighter">
+                                    <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
+                                        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                        </svg>
+                                        <span class="mt-2 text-base leading-normal">Seleccionar imagen</span>
+                                        <input type='file' class="hidden"/>
+                                    </label>
+                                </div>
+                                </div>
                             </div>
+                            
                             <div>
 
                             </div>
